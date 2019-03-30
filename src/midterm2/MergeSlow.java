@@ -159,18 +159,38 @@ public class MergeSlow {
         for (int i = 0; i < N; i++)
             index[i] = i;
 
-        int[] aux = new int[N];
-        sort(a, index, aux, 0, N-1);
+//        int[] aux = new int[N];
+//        sort(a, index, aux, 0, N-1);
+//        return index;
+        
+        //int[] aux = new int[N];
+        sort(a, index, 0, N-1);
         return index;
     }
 
     // mergesort a[lo..hi] using auxiliary array aux[lo..hi]
+  //TODO - this is your recursive method for step 2
+    
+    //Old recursive method 
+    
+//    @SuppressWarnings("rawtypes")
+//	private static void sort(Comparable[] a, int[] index, int[] aux, int lo, int hi) {
+//        if (hi <= lo) return;
+//        int mid = lo + (hi - lo) / 2;
+//        sort(a, index, aux, lo, mid);
+//        sort(a, index, aux, mid + 1, hi);
+//        merge(a, index, aux, lo, mid, hi);
+//    }
+    
     @SuppressWarnings("rawtypes")
-	private static void sort(Comparable[] a, int[] index, int[] aux, int lo, int hi) {
+	private static void sort(Comparable[] a, int[] index, int lo, int hi) {
+    	
+    	int[] aux = new int[index.length];
+    	
         if (hi <= lo) return;
         int mid = lo + (hi - lo) / 2;
-        sort(a, index, aux, lo, mid);
-        sort(a, index, aux, mid + 1, hi);
+        sort(a, index, lo, mid);
+        sort(a, index, mid + 1, hi);
         merge(a, index, aux, lo, mid, hi);
     }
 

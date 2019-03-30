@@ -9,9 +9,9 @@ public class PerformanceTest {
 	private static final Random rand = new Random();
 
 	public static void main(String[] args) {
-		StdOut.printf("%-12s  %-12s %n", "number of", "time to", "time to");
-		StdOut.printf("%-12s  %-12s %n", "integers", "mergesort", "mergesort slow");
-		StdOut.println("-----------------------");
+		StdOut.printf("%-12s  %-12s %-12s %n", "number of", "time to", "time to");
+		StdOut.printf("%-12s  %-12s %-12s %n", "integers", "mergesort", "mergesort slow");
+		StdOut.println("------------------------------------------");
 
 		for (int i = 1000; i <= 128000; i *= 2) {
 			Integer[] numbers = getRandomIntArray(i);
@@ -20,7 +20,12 @@ public class PerformanceTest {
 			Merge.sort(numbers);
 			double timeToSort = stopwatch.elapsedTime();
 			
-			StdOut.printf("%-12d  %-12.3f %n", i, timeToSort);
+			Stopwatch stopwatch2 = new Stopwatch();
+			MergeSlow.sort(numbers);
+			double timeToSort2 = stopwatch2.elapsedTime();
+			
+			StdOut.printf("%-12d  %-12.3f %-12.3f %n", i, timeToSort, timeToSort2);
+	
 		}
 		
 		StdOut.println("T H E   E N D");
