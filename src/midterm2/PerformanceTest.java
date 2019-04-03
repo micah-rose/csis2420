@@ -29,6 +29,12 @@ public class PerformanceTest {
 		}
 		
 		StdOut.println("T H E   E N D");
+		StdOut.println();
+		StdOut.println("C O M M E N T:");
+		StdOut.println("The reason the MergeSlow time is significantly different from");
+		StdOut.println("the Merge time is because when you create an auxiliary array");
+		StdOut.println("inside a recursive method it leads to extensive cost due to the");
+		StdOut.println("extra array creation and results in poor performace.");
 	}
 
 	private static Integer[] getRandomIntArray(int size) {
