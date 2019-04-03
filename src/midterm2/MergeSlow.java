@@ -208,7 +208,7 @@ public class MergeSlow {
      */
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
-        Merge.sort(a);
+        MergeSlow.sort(a);
         show(a);
     }
 }
