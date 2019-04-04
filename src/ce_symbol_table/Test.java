@@ -13,7 +13,8 @@ public class Test {
         System.out.println("Welcome\n\n");
         Tree tree = new Tree();
         Leaf root = tree.sendRootNode();
-        Scanner Teclado = new Scanner(System.in);
+        @SuppressWarnings("resource")
+		Scanner Teclado = new Scanner(System.in);
         do {
             System.out.println("Enter the command (add, delete, print, save, exit): ");
             command = Teclado.nextLine();

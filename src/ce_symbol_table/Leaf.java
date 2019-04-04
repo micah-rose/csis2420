@@ -51,13 +51,15 @@ public class Leaf {
         } else {
 // an iterator is created to be able to go through all the
 // array elements
-            Iterator pi = children.iterator();
+            @SuppressWarnings("rawtypes")
+			Iterator pi = children.iterator();
 // as long as that node has children, it is passed to the next
             while (pi.hasNext()) {
 // go through the children you have
                 ArrayList<String> aux2 = ((Leaf) pi.next()).getChildren2();
 // that list is retraced
-                Iterator pi2 = aux2.iterator();
+                @SuppressWarnings("rawtypes")
+				Iterator pi2 = aux2.iterator();
                 while (pi2.hasNext()) {
                     aux.add((String) pi2.next());
                 }

@@ -2,27 +2,32 @@ package ce_symbol_table;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.event.*;
 import java.util.*;
-import java.io.IOException;
-import javax.swing.tree.*;
 
 public class GUI extends JFrame implements ActionListener {
 
-    private JPanel principal, arbol, botones, h, pad, n;
-    private JButton anadir, eliminar, guardar, imprimir, salir;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel principal, arbol, botones, h, pad, n;
+    @SuppressWarnings("unused")
+	private JButton anadir, eliminar, guardar, imprimir, salir;
     private JFrame addHijo, clearNodo;
     private JButton add, clear;
-    private JComboBox padres, nodos;//para crear un desplegable
+    @SuppressWarnings("rawtypes")
+	private JComboBox padres, nodos;//para crear un desplegable
     private JTextArea area;
-    private JTextField hijo, nodo;
+    @SuppressWarnings("unused")
+	private JTextField hijo, nodo;
     private JLabel lh, lp, ln;
     int res;
     private String nombreH;
     private String nombreP;
     private String nombreN;
-    private String command = null;
+    @SuppressWarnings("unused")
+	private String command = null;
     private Tree tree;
     private Leaf root;
 //constructor por defecto
@@ -70,7 +75,8 @@ public class GUI extends JFrame implements ActionListener {
         root = tree.sendRootNode();
     }
 
-    public void anadir() {
+    @SuppressWarnings({ "static-access", "unchecked", "rawtypes" })
+	public void anadir() {
         addHijo = new JFrame("Add Child");
         addHijo.setSize(350, 150);
         addHijo.setDefaultCloseOperation(addHijo.EXIT_ON_CLOSE);
@@ -108,7 +114,8 @@ public class GUI extends JFrame implements ActionListener {
     }
 // method to delete node
 
-    public void eliminar() {
+    @SuppressWarnings({ "static-access", "rawtypes", "unchecked" })
+	public void eliminar() {
         clearNodo = new JFrame("Borrar nodo");
         clearNodo.setSize(350, 150);
         clearNodo.setDefaultCloseOperation(clearNodo.EXIT_ON_CLOSE);

@@ -1,11 +1,7 @@
 package midterm1;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collections;
-import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
-import edu.princeton.cs.algs4.StdOut;
 
 public class CityApp {
 	

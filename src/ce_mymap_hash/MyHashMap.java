@@ -2,8 +2,6 @@ package ce_mymap_hash;
 
 import java.util.LinkedList;
 
-import ce_mymap_hash.MyMap.Entry;
-
 public class MyHashMap<K, V> implements MyMap<K, V> {
 	
 	private final static int DEFAULT_INITIAL_CAPACITY = 4;

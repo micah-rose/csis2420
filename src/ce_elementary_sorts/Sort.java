@@ -7,6 +7,7 @@ public abstract class Sort<T> implements Comparable<T> {
 	}
 
 	//Function to sort array using insertion
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void sort(Comparable[] array)
     {
         Comparable temp;
@@ -24,6 +25,7 @@ public abstract class Sort<T> implements Comparable<T> {
    }
 	
 	//Function to sort array using selection
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void selectionSort(Comparable[] array)
     {
         Comparable temp;

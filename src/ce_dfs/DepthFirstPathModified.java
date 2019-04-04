@@ -8,8 +8,8 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class DepthFirstPathModified {
 	
-	private boolean[] marked;    // marked[v] = is there an s-v path?
-    private int[] edgeTo;        // edgeTo[v] = last edge on s-v path
+	private static boolean[] marked;    // marked[v] = is there an s-v path?
+    private static int[] edgeTo;        // edgeTo[v] = last edge on s-v path
     private final int s;         // source vertex
 
     /**
@@ -87,10 +87,35 @@ public class DepthFirstPathModified {
 
         DepthFirstPaths dfs = new DepthFirstPaths(G, s);
         
+        //Adjacency List
         StdOut.println("Adjacency List: ");
+        StdOut.println("---------------");
+        for (int v = 0; v < G.V(); v++) {
+        	if (dfs.hasPathTo(v)) {
+                StdOut.printf("%d:  ", v);
+        		for(Integer pCrawl: G.adj(v)){ 
+        			if (pCrawl == v) StdOut.print(pCrawl); //FIX ME - not working as intended
+                    else StdOut.print("->" + pCrawl);
+                }
+                StdOut.println();
+            }
+            else {
+                StdOut.printf("%d to %d:  not connected\n", s, v);
+            }
+        }
         
-        //loop through marked and edgeTo    
+        StdOut.println();
         
+        //Loop through marked and edgeTo 
+        StdOut.println("marked    edgeTo ");
+        StdOut.println("------    ------");
+        for (int v = 0; v < G.V(); v++) {
+        	StdOut.println(dfs.hasPathTo(v) + "      " + dfs.pathTo(s)); //FIX ME - this is wrong
+        }
+        
+        StdOut.println();
+        
+        //Original Output
         StdOut.println("Original Output: ");
         for (int v = 0; v < G.V(); v++) {
             if (dfs.hasPathTo(v)) {
