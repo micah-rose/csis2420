@@ -1,6 +1,5 @@
 package ce_dfs;
 
-import edu.princeton.cs.algs4.DepthFirstPaths;
 import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stack;
@@ -80,24 +79,25 @@ public class DepthFirstPathModified {
      *
      * @param args the command-line arguments
      */
-    public static void main(String[] args) {
+    @SuppressWarnings("static-access")
+	public static void main(String[] args) {
         In in = new In(args[0]);
         Graph G = new Graph(in);
         int s = Integer.parseInt(args[1]);
 
-        DepthFirstPaths dfs = new DepthFirstPaths(G, s);
+        DepthFirstPathModified dfs = new DepthFirstPathModified(G, s);
         
         //Adjacency List
         StdOut.println("Adjacency List: ");
         StdOut.println("---------------");
         for (int v = 0; v < G.V(); v++) {
         	if (dfs.hasPathTo(v)) {
-                StdOut.printf("%d:  ", v);
+                String newPrint = v + ": ";
         		for(Integer pCrawl: G.adj(v)){ 
-        			if (pCrawl == v) StdOut.print(pCrawl); //FIX ME - not working as intended
-                    else StdOut.print("->" + pCrawl);
+        			newPrint += pCrawl + "->"; 
                 }
-                StdOut.println();
+        		newPrint = newPrint.substring(0, newPrint.length() - 2);
+                StdOut.println(newPrint);
             }
             else {
                 StdOut.printf("%d to %d:  not connected\n", s, v);
@@ -110,7 +110,7 @@ public class DepthFirstPathModified {
         StdOut.println("marked    edgeTo ");
         StdOut.println("------    ------");
         for (int v = 0; v < G.V(); v++) {
-        	StdOut.println(dfs.hasPathTo(v) + "      " + dfs.pathTo(s)); //FIX ME - this is wrong
+        	StdOut.printf("%-5s %5d\n", dfs.marked[v], dfs.edgeTo[v]); 
         }
         
         StdOut.println();
