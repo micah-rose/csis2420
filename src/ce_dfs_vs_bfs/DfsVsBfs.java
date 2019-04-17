@@ -13,7 +13,7 @@ public class DfsVsBfs {
 	private static int source = 1;      // source vertex
 	private static boolean[] marked;    // marked[v] = is there an s-v path?
     private static int[] edgeTo;        // edgeTo[v] = last edge on s-v path
-    private int[] distTo;      			// distTo[v] = number of edges shortest s-v path
+    private static int[] distTo;      			// distTo[v] = number of edges shortest s-v path
     private static final int INFINITY = Integer.MAX_VALUE;
 
 	
@@ -26,10 +26,9 @@ public class DfsVsBfs {
         dfs(G, s);
         
         distTo = new int[G.V()];
-        validateVertexBfs(s);
-        bfs(G, s);
-        
+        bfs(G, s);       
         assert check(G, s);
+        
     }
 
 /********************************************************************************************************/
@@ -172,25 +171,25 @@ public class DfsVsBfs {
         return true;
     }
 
-    // throw an IllegalArgumentException unless {@code 0 <= v < V}
-    private void validateVertexBfs(int v) {
-        int V = marked.length;
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
-    }
+//    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+//    private static void validateVertexBfs(int v) {
+//        int V = marked.length;
+//        if (v < 0 || v >= V)
+//            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+//    }
 
-    // throw an IllegalArgumentException unless {@code 0 <= v < V}
-    private void validateVertices(Iterable<Integer> vertices) {
-        if (vertices == null) {
-            throw new IllegalArgumentException("argument is null");
-        }
-        int V = marked.length;
-        for (int v : vertices) {
-            if (v < 0 || v >= V) {
-                throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
-            }
-        }
-    }
+//    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+//    private void validateVertices(Iterable<Integer> vertices) {
+//        if (vertices == null) {
+//            throw new IllegalArgumentException("argument is null");
+//        }
+//        int V = marked.length;
+//        for (int v : vertices) {
+//            if (v < 0 || v >= V) {
+//                throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+//            }
+//        }
+//    }
     
 /********************************************************************************************************/
     //End of BFS Path code
@@ -228,15 +227,36 @@ public class DfsVsBfs {
                 }
                 StdOut.println();
         }
+        
+        StdOut.println();
+        
+        //assert check(G, source);
 
-        StdOut.println("Paths DFS:    Shortest Paths BFS: ");
-        StdOut.println("----------    -------------------");
+        StdOut.println("Shortest Paths BFS: ");
+        StdOut.println("-------------------");
         for (int v = 0; v < G.V(); v++) {
-                for (int x : vs.pathTo(v)) {
+            if (vs.hasPathTo(v)) {
+                for (int x : vs.pathTo(distTo[source])) { //this is wrong
                     if (x == source) StdOut.print(x);
                     else        StdOut.print("->" + x);
                 }
                 StdOut.println();
+            }
+
+            else {
+                StdOut.printf("%d to %d (-):  not connected\n", source, v);
+            }
+
         }
+       
+        
+//        0 4
+//        1 2
+//        1 3
+//        1 4
+//        2 3
+//        2 5
+//        2 6
+//        3 2
     }
 }
