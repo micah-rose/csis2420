@@ -13,8 +13,8 @@ public class DfsVsBfs {
 	private static int source = 1;      // source vertex
 	private static boolean[] marked;    // marked[v] = is there an s-v path?
     private static int[] edgeTo;        // edgeTo[v] = last edge on s-v path
-    private static int[] distTo;      			// distTo[v] = number of edges shortest s-v path
-    private static final int INFINITY = Integer.MAX_VALUE;
+    private static int[] distTo;      	// distTo[v] = number of edges shortest s-v path
+    //private static final int INFINITY = Integer.MAX_VALUE;
 
 	
     @SuppressWarnings("static-access")
@@ -23,12 +23,7 @@ public class DfsVsBfs {
         edgeTo = new int[G.V()];
         marked = new boolean[G.V()];
         validateVertex(s);
-        dfs(G, s);
-        
-        distTo = new int[G.V()];
-        bfs(G, s);       
-        assert check(G, s);
-        
+        dfs(G, s);      
     }
 
 /********************************************************************************************************/
@@ -92,10 +87,10 @@ public class DfsVsBfs {
     //Code for BFS Paths
 /********************************************************************************************************/
  // breadth-first search from a single source
-    private void bfs(Graph G, int s) {
+    private static void bfs(Graph G, int s) {
         Queue<Integer> q = new Queue<Integer>();
         for (int v = 0; v < G.V(); v++)
-            distTo[v] = INFINITY;
+            //distTo[v] = INFINITY;
         distTo[s] = 0;
         marked[s] = true;
         q.enqueue(s);
@@ -112,7 +107,11 @@ public class DfsVsBfs {
             }
         }
     }
-
+    
+    public static boolean hasPathToBFS(int v) {
+        validateVertexBFS(v);
+        return marked[v];
+    }
 
     /**
      * Returns the number of edges in a shortest path between the source vertex {@code s}
@@ -125,10 +124,21 @@ public class DfsVsBfs {
         validateVertex(v);
         return distTo[v];
     }
+    
+    public static Iterable<Integer> pathToBFS(int v) {
+        validateVertexBFS(v);
+        if (!hasPathToBFS(v)) return null;
+        Stack<Integer> path = new Stack<Integer>();
+        int x;
+        for (x = v; distTo[x] != 0; x = edgeTo[x])
+            path.push(x);
+        path.push(x);
+        return path;
+    }
 
 
     // check optimality conditions for single source
-    private boolean check(Graph G, int s) {
+    private static boolean check(Graph G, int s) {
 
         // check that the distance of s = 0
         if (distTo[s] != 0) {
@@ -140,13 +150,13 @@ public class DfsVsBfs {
         // provided v is reachable from s
         for (int v = 0; v < G.V(); v++) {
             for (int w : G.adj(v)) {
-                if (hasPathTo(v) != hasPathTo(w)) {
+                if (hasPathToBFS(v) != hasPathToBFS(w)) {
                     StdOut.println("edge " + v + "-" + w);
-                    StdOut.println("hasPathTo(" + v + ") = " + hasPathTo(v));
-                    StdOut.println("hasPathTo(" + w + ") = " + hasPathTo(w));
+                    StdOut.println("hasPathTo(" + v + ") = " + hasPathToBFS(v));
+                    StdOut.println("hasPathTo(" + w + ") = " + hasPathToBFS(w));
                     return false;
                 }
-                if (hasPathTo(v) && (distTo[w] > distTo[v] + 1)) {
+                if (hasPathToBFS(v) && (distTo[w] > distTo[v] + 1)) {
                     StdOut.println("edge " + v + "-" + w);
                     StdOut.println("distTo[" + v + "] = " + distTo[v]);
                     StdOut.println("distTo[" + w + "] = " + distTo[w]);
@@ -158,7 +168,7 @@ public class DfsVsBfs {
         // check that v = edgeTo[w] satisfies distTo[w] = distTo[v] + 1
         // provided v is reachable from s
         for (int w = 0; w < G.V(); w++) {
-            if (!hasPathTo(w) || w == s) continue;
+            if (!hasPathToBFS(w) || w == s) continue;
             int v = edgeTo[w];
             if (distTo[w] != distTo[v] + 1) {
                 StdOut.println("shortest path edge " + v + "-" + w);
@@ -171,12 +181,12 @@ public class DfsVsBfs {
         return true;
     }
 
-//    // throw an IllegalArgumentException unless {@code 0 <= v < V}
-//    private static void validateVertexBfs(int v) {
-//        int V = marked.length;
-//        if (v < 0 || v >= V)
-//            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
-//    }
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+    private static void validateVertexBFS(int v) {
+        int V = marked.length;
+        if (v < 0 || v >= V)
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+    }
 
 //    // throw an IllegalArgumentException unless {@code 0 <= v < V}
 //    private void validateVertices(Iterable<Integer> vertices) {
@@ -218,8 +228,8 @@ public class DfsVsBfs {
         StdOut.println();
        
         //Print comparisons DFS vs BFS 
-        StdOut.println("Paths DFS:    Shortest Paths BFS: ");
-        StdOut.println("----------    -------------------");
+        StdOut.println("Paths DFS: ");
+        StdOut.println("----------");
         for (int v = 0; v < G.V(); v++) {
                 for (int x : vs.pathTo(v)) {
                     if (x == source) StdOut.print(x);
@@ -230,13 +240,18 @@ public class DfsVsBfs {
         
         StdOut.println();
         
-        //assert check(G, source);
+        marked = new boolean[G.V()];
+        distTo = new int[G.V()];
+        edgeTo = new int[G.V()];
+        validateVertexBFS(source);
+        bfs(G, source);
+        assert check(G, source);
 
         StdOut.println("Shortest Paths BFS: ");
         StdOut.println("-------------------");
         for (int v = 0; v < G.V(); v++) {
-            if (vs.hasPathTo(v)) {
-                for (int x : vs.pathTo(distTo[source])) { //this is wrong
+            if (hasPathToBFS(v)) {
+                for (int x : pathToBFS(v)) { 
                     if (x == source) StdOut.print(x);
                     else        StdOut.print("->" + x);
                 }
@@ -246,17 +261,6 @@ public class DfsVsBfs {
             else {
                 StdOut.printf("%d to %d (-):  not connected\n", source, v);
             }
-
-        }
-       
-        
-//        0 4
-//        1 2
-//        1 3
-//        1 4
-//        2 3
-//        2 5
-//        2 6
-//        3 2
+        }      
     }
 }

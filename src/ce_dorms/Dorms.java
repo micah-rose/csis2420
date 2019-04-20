@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import edu.princeton.cs.algs4.In;
+
 public class Dorms {
     static class Edge {
         int source;
@@ -20,12 +22,18 @@ public class Dorms {
     static class Graph {
         int vertices;
         ArrayList<Edge> allEdges = new ArrayList<>();
+		@SuppressWarnings("unused")
+		private In in;
 
+//        Graph(In in) {
+//			this.in = in;
+//		}
+		
         Graph(int vertices) {
             this.vertices = vertices;
         }
 
-        public void addEdge(int source, int destination, int weight) {
+		public void addEdge(int source, int destination, int weight) {
             Edge edge = new Edge(source, destination, weight);
             allEdges.add(edge); //add to total edges
         }
@@ -64,7 +72,6 @@ public class Dorms {
                 }
             }
             //print MST
-            System.out.println("Minimum Spanning Tree: ");
             printGraph(mst);
         }
 
@@ -91,25 +98,32 @@ public class Dorms {
         }
 
         public void printGraph(ArrayList<Edge> edgeList){
+        	System.out.println("Dorms need to be connected: ");
             for (int i = 0; i <edgeList.size() ; i++) {
                 Edge edge = edgeList.get(i);
-                System.out.println("Edge-" + i + " source: " + edge.source +
-                        " destination: " + edge.destination +
-                        " weight: " + edge.weight);
+                System.out.print(edge.source + "-" + edge.destination + " ");
+            }
+        	System.out.println("Dorms need a router: ");
+            for (int i = 0; i <edgeList.size() ; i++) {
+                Edge edge = edgeList.get(i);
+                System.out.print(edge.source + " ");
+            }
+        	System.out.println("Total cost: $");
+            for (int i = 0; i <edgeList.size() ; i++) {
+                Edge edge = edgeList.get(i);
+                System.out.print(edge.weight++);
             }
         }
     }
+    
 //    public static void main(String[] args) {
-//            int vertices = 6;
-//            Graph graph = new Graph(vertices);
-//            graph.addEdge(0, 1, 4);
-//            graph.addEdge(0, 2, 3);
-//            graph.addEdge(1, 2, 1);
-//            graph.addEdge(1, 3, 2);
-//            graph.addEdge(2, 3, 4);
-//            graph.addEdge(3, 4, 2);
-//            graph.addEdge(4, 5, 6);
-//            graph.dormsMST();
+//        In in = new In("src/ce_dorms/GraphDorm.txt");
+//        Graph graph = new Graph(in);
+//        graph.addEdge(0, 1, 20);
+//        graph.addEdge(1, 6, 15);
+//        graph.addEdge(3, 4, 25);     
+//        graph.addEdge(4, 5, 5);
+//        graph.dormsMST();
 //    }
     
 //    6
@@ -130,14 +144,15 @@ public class Dorms {
         Graph graph = new Graph(vertices);
         graph.addEdge(0, 1, 20);
         graph.addEdge(0, 3, 45);
-        graph.addEdge(1, 4, 75);
+        graph.addEdge(0, 4, 75);
         graph.addEdge(1, 3, 50);
         graph.addEdge(1, 6, 15);
         graph.addEdge(3, 4, 25);
         graph.addEdge(3, 5, 30);
-        graph.addEdge(3, 6, 65);      
+        graph.addEdge(3, 6, 65);
         graph.addEdge(4, 5, 5);
         graph.addEdge(5, 6, 45);
+        
         graph.dormsMST();
-}
+    }
 }
